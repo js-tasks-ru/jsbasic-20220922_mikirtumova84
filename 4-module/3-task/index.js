@@ -1,8 +1,6 @@
 function highlight(table) {
   const tableBodyRows = Array.from(table.querySelector('tbody').rows);
 
-  console.log(tableBodyRows)
-
   tableBodyRows.forEach((row, index) => {
     const cells = Array.from(row.cells);
 
