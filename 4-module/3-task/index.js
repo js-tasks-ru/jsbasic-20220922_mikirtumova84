@@ -1,36 +1,30 @@
 function highlight(table) {
-  const tableBodyRows = table.querySelector('tbody').rows;
+  const tableBodyRows = Array.from(table.querySelector('tbody').rows);
 
-  for (let i = 0; i < tableBodyRows.length; i++) {
-    let noDataAttribute = [];
+  console.log(tableBodyRows)
 
-    for (cell of tableBodyRows[i].cells) {
+  tableBodyRows.forEach((row, index) => {
+    const cells = Array.from(row.cells);
 
-      if (cell.getAttribute('data-available') === 'true') {
-        tableBodyRows[i].classList.add('available');
-      } else if (cell.getAttribute('data-available') === 'false') {
-        tableBodyRows[i].classList.add('unavailable');
-      }
+    const cellsWithDataAttr = cells.find(cell => cell.hasAttribute('data-available'));
 
-      if (!cell.hasAttribute('data-available')) {
-        noDataAttribute.push(false);
-      }
-
-    }
-
-    if (noDataAttribute.length === tableBodyRows[i].cells.length) {
-      tableBodyRows[i].hidden = true;
-    }
-
-    if (tableBodyRows[i].cells[2].textContent === 'm') {
-      tableBodyRows[i].classList.add('male');
+    if (cellsWithDataAttr && cellsWithDataAttr.getAttribute('data-available')  === 'true') {
+      row.classList.add('available');
+    } else if (cellsWithDataAttr && cellsWithDataAttr.getAttribute('data-available')  === 'false') {
+      row.classList.add('unavailable');
     } else {
-      tableBodyRows[i].classList.add('female');
+      row.hidden = true;
     }
 
-    if (Number(tableBodyRows[i].cells[1].textContent) < 18) {
-      tableBodyRows[i].style.textDecoration = 'line-through';
+    if (cells[2].textContent === 'm') {
+      row.classList.add('male');
+    } else {
+      row.classList.add('female');
     }
 
-  }
+    if (Number(cells[1].textContent) < 18) {
+      row.style.textDecoration = 'line-through';
+    }
+
+  });
 }
