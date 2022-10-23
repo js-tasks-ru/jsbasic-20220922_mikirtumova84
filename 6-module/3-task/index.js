@@ -48,8 +48,9 @@ export default class Carousel {
       </div>
     `));
 
-    carouselSlides.forEach(item => {
+    carouselSlides.forEach((item, index) => {
       carouselInnerElem.appendChild(item);
+      this.onButtonAddToCartClick(item, this.slides[index].id);
     });
 
     carouselElem.appendChild(carouselInnerElem);
@@ -99,4 +100,24 @@ export default class Carousel {
       this.toggleButton();
     });
   }
+
+  onButtonAddToCartClick(cardElem, cardElemID) {
+    cardElem.addEventListener('click', (evt) => {
+      let productAddEvent = new CustomEvent('product-add', {
+        detail: cardElemID,
+        bubbles: true
+      });
+
+      if (evt.target.closest('.carousel__button')) {
+        cardElem.dispatchEvent(productAddEvent);
+      }
+    });
+  }
+
+  onProductAdd() {
+    this.carouselElem.addEventListener('product-add', () => {
+      console.log('product add to cart');
+    });
+  }
+
 }
