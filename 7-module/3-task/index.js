@@ -7,10 +7,6 @@ export default class StepSlider {
     this.elem = this.renderSlider();
   }
 
-  getProgress(sliderWidth, clickPosition) {
-    return clickPosition / sliderWidth;
-  }
-
   renderSlider() {
     const sliderElem = document.createElement('div');
     sliderElem.classList.add('slider');
@@ -55,30 +51,35 @@ export default class StepSlider {
     return sliderElem;
   }
 
+  getProgress(sliderWidth, clickPosition) {
+    return clickPosition / sliderWidth;
+  }
+
   onSliderClick() {
     this.sliderElem.addEventListener('click', (evt) => {
       const sliderWidth = this.sliderElem.getBoundingClientRect().width;
       const clickPosition = evt.clientX - this.sliderElem.getBoundingClientRect().left;
       const currentProgress = this.getProgress(sliderWidth, clickPosition);
-      const approximateValue = Math.round(currentProgress * (this.steps - 1));
+      const segmentsCount = this.steps - 1;
+      const value = Math.round(currentProgress * segmentsCount);
 
-      this.sliderThumb.style.left = `${approximateValue / (this.steps - 1) * 100}%`;
-      this.sliderProgress.style.width = `${approximateValue / (this.steps - 1) * 100}%`;
+      this.sliderThumb.style.left = `${value / segmentsCount * 100}%`;
+      this.sliderProgress.style.width = `${value / segmentsCount * 100}%`;
 
-      this.sliderThumb.querySelector('.slider__value').textContent = approximateValue;
+      this.sliderThumb.querySelector('.slider__value').textContent = value;
 
       const stepElems = this.sliderStepsElem.querySelectorAll('span');
 
       stepElems.forEach((item, index) => {
         item.classList.remove('slider__step-active');
 
-        if (index === approximateValue) {
+        if (index === value) {
           item.classList.add('slider__step-active');
         }
       });
 
       let sliderChangeEvent = new CustomEvent('slider-change', {
-        detail: approximateValue,
+        detail: value,
         bubbles: true,
       });
 
