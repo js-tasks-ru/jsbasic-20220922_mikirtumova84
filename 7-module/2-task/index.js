@@ -21,6 +21,7 @@ export default class Modal {
 
   setBody(node) {
     const bodyModalElem = this.modalElem.querySelector('.modal__body');
+    bodyModalElem.innerHTML = '';
     bodyModalElem.appendChild(node);
   }
 
