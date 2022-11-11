@@ -19,7 +19,7 @@ export default class StepSlider {
     this.sliderElem = sliderElem;
 
     const sliderThumb = createElement(`
-      <div class="slider__thumb" style="left: 0%;">
+      <div class="slider__thumb" style="left: ${this.initialValue * 100 / (this.steps - 1)}%;">
         <span class="slider__value">${this.initialValue}</span>
       </div>
     `);
@@ -29,7 +29,7 @@ export default class StepSlider {
     sliderElem.appendChild(sliderThumb);
 
     const sliderProgress = createElement(`
-      <div class="slider__progress" style="width: 0%;"></div>
+      <div class="slider__progress" style="width: ${this.initialValue * 100 / (this.steps - 1)}%;"></div>
     `);
 
     this.sliderProgress = sliderProgress;
