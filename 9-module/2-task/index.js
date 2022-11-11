@@ -79,7 +79,7 @@ export default class Main {
       cart.addProduct(currentProduct);
     });
 
-    bodyElem.addEventListener('slider-change', (evt) => {
+    sliderContainer.addEventListener('slider-change', (evt) => {
       let value = evt.detail;
 
       productsGrid.updateFilter({
@@ -87,7 +87,7 @@ export default class Main {
       });
     });
 
-    bodyElem.addEventListener('ribbon-select', (evt) => {
+    ribbonContainer.addEventListener('ribbon-select', (evt) => {
       let categoryId = evt.detail;
 
       productsGrid.updateFilter({
