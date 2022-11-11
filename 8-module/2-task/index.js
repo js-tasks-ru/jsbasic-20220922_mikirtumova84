@@ -25,7 +25,6 @@ export default class ProductGrid {
 
   updateFilter(filters) {
     this.filters = { ...this.filters, ...filters};
-    console.log(this.filters);
 
     let results = this.products
       .filter((item) => {
